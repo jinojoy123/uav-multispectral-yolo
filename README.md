@@ -61,6 +61,16 @@ The mapping scripts are intended to connect orthomosaic inference with geospatia
 
 Citation metadata is a template in [`CITATION.cff`](CITATION.cff). Replace the TODO author and release details and archive the exact public release (for example, with Zenodo) before citing a version in a manuscript.
 
+## License and Attribution
+
+This repository includes modified Ultralytics YOLO source code and research-specific implementations for RGB and five-channel multispectral instance segmentation.
+
+The Ultralytics-derived software is subject to the applicable GNU Affero General Public License v3.0 (AGPL-3.0) terms.
+
+The multispectral implementation was developed with reference to the YOLO-Multispectral project by Andrew Esparon. Applicable MIT copyright and permission notices are preserved for any incorporated or adapted code.
+
+For further information, see LICENSE and THIRD_PARTY_NOTICES.md.
+
 ## License
 
 No repository-level `LICENSE` file has been added because the supplied archive did not establish the applicable license for the complete collection of custom scripts and bundled upstream-derived source. See [`PRE_RELEASE_CHECKLIST.md`](PRE_RELEASE_CHECKLIST.md). Do not assume that all components can be redistributed under a new license until their provenance and license terms have been checked.
