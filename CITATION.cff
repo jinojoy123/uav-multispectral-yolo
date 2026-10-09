@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the repository release and the associated manuscript. Replace the TODO fields before publication."
+title: "Sugarbeet Weed Detection and Prescription Mapping with RGB and RGBRN Imagery"
+version: "0.1.0-pre-release"
+date-released: "2026-10-09"
+authors:
+  - family-names: "TODO"
+    given-names: "TODO"
+    affiliation: "TODO"

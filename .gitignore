@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+env/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Training runs and model artifacts
+runs/
+**/runs/
+weights/
+*.pt
+*.pth
+*.onnx
+*.engine
+*.plan
+
+# Large/private geospatial data and generated outputs
+*.tif
+*.tiff
+*.shp
+*.shx
+*.dbf
+*.prj
+*.cpg
+*.gpkg
+*.geojson
+*.las
+*.laz
+outputs/
+output/
+results/
+reports/
+
+# Local environment/configuration
+.env
+.env.*
