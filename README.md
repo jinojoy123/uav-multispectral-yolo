@@ -6,7 +6,7 @@ Research code for RGB and five-band RGBRN (Red, Green, Blue, Red Edge, NIR) YOLO
 
 ## What's included
 
-### Research scripts at the repository root
+### Research scripts in the scripts/ folder
 
 | Script | Purpose (based on filename and code organization) |
 |---|---|
