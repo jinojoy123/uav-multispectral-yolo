@@ -7,7 +7,7 @@ This repository brings together dataset preparation, model training and evaluati
 ## Key features
 
 - **RGB and five-band multispectral input:** R, G, B, Red Edge, and NIR, in that order.
-- **YOLO instance segmentation:** research adaptations for YOLO11, YOLO12, and YOLO26 architectures.
+- **YOLO instance segmentation:** research adaptations for YOLO architectures.
 - **Model development:** scripts for dataset arrangement, RGB/RGBRN training, and evaluation.
 - **Edge optimization:** TensorRT FP32, FP16, and INT8 export and evaluation workflows.
 - **NVIDIA Jetson deployment:** dedicated processing scripts for Jetson Orin Nano and Jetson AGX Orin.
@@ -23,17 +23,16 @@ UAV imagery / georeferenced orthomosaics
                   |
                   v
     Multispectral YOLO instance segmentation
-       (YOLO11 / YOLO12 / YOLO26)
                   |
                   v
        PyTorch or TensorRT deployment
           (NVIDIA Jetson edge)
                   |
                   v
-   Tiled orthomosaic inference and stitching
+   orthomosaic inference and stitching
                   |
                   v
-  Georeferenced weed maps / prescription maps
+        Georeferenced weed maps
 ```
 
 **Scope:** Model support and mapping scripts are included in the repository, but this is research software rather than a turnkey package. Users must configure their paths, environments, and inputs before execution.
@@ -100,7 +99,7 @@ Inspect the selected script for the exact output filenames, grid size, threshold
 
 ### RGB
 
-RGB models use three image channels. The relevant training, evaluation, and mapping scripts should be configured to use the corresponding RGB imagery and trained weights.
+RGB models use images directly obtained from the sensor. No preprocessing steps like RGBRN. The relevant training, evaluation, and mapping scripts should be configured to use the corresponding RGB imagery and trained weights.
 
 ### RGBRN
 
@@ -113,8 +112,6 @@ The intended multispectral channel order is:
 5. Near-Infrared (NIR)
 
 Maintain this order throughout band alignment, stacking, tile creation, training, and inference. Multispectral images must have the spatial dimensions, band registration, and numeric representation expected by the modified model loader.
-
-**Important preprocessing note:** The supplied data-preparation code uses per-band `cv2.normalize(..., 0, 255, cv2.NORM_MINMAX)` in part of the workflow, whereas some edge mapping scripts specify `RGBRN_SCALING_MODE = "divide_256"`. These operations are not equivalent. Before using the scripts on new data, confirm the full training-data conversion and model-input pipeline and select the inference transformation that reproduces it. Do not change preprocessing silently when reproducing reported experiments.
 
 ## Installation and environment
 
