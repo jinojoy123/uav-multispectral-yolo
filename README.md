@@ -135,6 +135,7 @@ print("Loaded from:", ultralytics.__file__)
 ```
 
 The loaded path should point to `uav_MS_yolo/code/ultralytics/`, rather than an unrelated `site-packages` installation. The modified package in the supplied code identifies itself as Ultralytics version **8.4.112**.
+For environment setup, dependencies, training, and NVIDIA Jetson deployment instructions, see the Installation Guide.
 
 ### Typical usage sequence
 
