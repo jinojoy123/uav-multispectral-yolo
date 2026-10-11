@@ -3,8 +3,7 @@ message: "If you use this software in your research, please cite it using the me
 type: software
 title: "UAV Multispectral YOLO: Automated Agricultural Imagery Mapping on Edge Devices"
 authors:
-  - family-names: "Joy"
-    given-names: "Jino"
+  -  "Jino Joy", "Ajay Singh", "Kelvin Betitame", "Kirk Howatt", "Joseph Mettler", "William Aderholdt", "Xin Sun"
 repository-code: "https://github.com/jinojoy123/uav-multispectral-yolo"
 url: "https://github.com/jinojoy123/uav-multispectral-yolo"
 abstract: >-
