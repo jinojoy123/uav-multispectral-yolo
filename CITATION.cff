@@ -1,9 +1,28 @@
-cff-version: 1.2.0
-message: "If you use this software, please cite the repository release and the associated manuscript. Replace the TODO fields before publication."
-title: "Sugarbeet Weed Detection and Prescription Mapping with RGB and RGBRN Imagery"
-version: "0.1.0-pre-release"
-date-released: "2026-10-09"
+cff-version: 1.0
+message: "If you use this software in your research, please cite it using the metadata in this file."
+type: software
+title: "UAV Multispectral YOLO: Automated Agricultural Imagery Mapping on Edge Devices"
 authors:
-  - family-names: "TODO"
-    given-names: "TODO"
-    affiliation: "TODO"
+  - family-names: "Joy"
+    given-names: "Jino"
+repository-code: "https://github.com/jinojoy123/uav-multispectral-yolo"
+url: "https://github.com/jinojoy123/uav-multispectral-yolo"
+abstract: >-
+  Research framework for RGB and five-band RGBRN (Red, Green, Blue,
+  Red Edge, and Near-Infrared) YOLO instance segmentation of UAV
+  agricultural imagery. The repository includes modified Ultralytics
+  implementations for YOLO, model training and
+  evaluation scripts, TensorRT export and testing, and orthomosaic-based
+  mapping workflows for NVIDIA Jetson Orin edge devices. Sugarbeet
+  and weed segmentation and prescription mapping are the demonstrated
+  agricultural application.
+keywords:
+  - multispectral imaging
+  - unmanned aerial vehicle
+  - YOLO
+  - instance segmentation
+  - edge computing
+  - NVIDIA Jetson
+  - precision agriculture
+  - weed mapping
+license: AGPL-3.0-only
