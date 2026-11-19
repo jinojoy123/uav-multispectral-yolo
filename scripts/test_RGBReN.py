@@ -1,4 +1,4 @@
-# uav_MS_yolo RGBRN - INDEPENDENT TEST EVALUATION
+# uav_MS_yolo RGBReN - INDEPENDENT TEST EVALUATION
 #
 # Outputs:
 #   1. Prediction visualization
@@ -67,25 +67,25 @@ import tifffile
 
 # DATASET SETTINGS
 
-# RGBRN dataset path
-dataset_path = r"/processed_RGBRN"
+# RGBReN dataset path
+dataset_path = r"/processed_RGBReN"
 
 os.makedirs(
     dataset_path,
     exist_ok=True
 )
 
-images_train_path_RGBRN = os.path.join(
+images_train_path_RGBReN = os.path.join(
     dataset_path,
     "train"
 )
 
-images_val_path_RGBRN = os.path.join(
+images_val_path_RGBReN = os.path.join(
     dataset_path,
     "val"
 )
 
-images_test_path_RGBRN = os.path.join(
+images_test_path_RGBReN = os.path.join(
     dataset_path,
     "test"
 )
@@ -105,12 +105,12 @@ class_names = [
 
 # CREATE DATA YAML
 
-output_yaml_RGBRN = os.path.join(
+output_yaml_RGBReN = os.path.join(
     dataset_path,
-    "data_RGBRN.yaml"
+    "data_RGBReN.yaml"
 )
 
-yaml_path = output_yaml_RGBRN
+yaml_path = output_yaml_RGBReN
 
 print("\nDataset YAML created:")
 print(yaml_path)
@@ -132,7 +132,7 @@ MODEL_PATH = os.path.join(
 # Output folder
 OUTPUT_DIR = os.path.join(
     dataset_path,
-    "test_evaluation_RGBRN"
+    "test_evaluation_RGBReN"
 )
 
 
@@ -140,7 +140,7 @@ OUTPUT_DIR = os.path.join(
 IMG_SIZE = 640
 
 # Use EXACTLY the same confidence threshold
-# for every RGB and RGBRN model.
+# for every RGB and RGBReN model.
 CONF_THRESHOLD = 0.5
 
 IOU_NMS_THRESHOLD = 0.70
@@ -153,7 +153,7 @@ print(f"\nUsing device: {device}")
 
 # CLASS DEFINITIONS
 
-# Must correspond exactly to data_RGBRN.yaml
+# Must correspond exactly to data_RGBReN.yaml
 #
 # 0 = Crop
 # 1 = Weed
@@ -213,20 +213,20 @@ comparison_dir.mkdir(
 
 # DEFINE TEST IMAGE AND LABEL FOLDERS
 
-# Based directly on your RGBRN dataset structure:
+# Based directly on your RGBReN dataset structure:
 #
-# processed_RGBRN/
+# processed_RGBReN/
 # └── test/
 #     ├── images/
 #     └── labels/
 #
 
 test_image_dir = Path(
-    images_test_path_RGBRN
+    images_test_path_RGBReN
 ) / "images"
 
 test_label_dir = Path(
-    images_test_path_RGBRN
+    images_test_path_RGBReN
 ) / "labels"
 
 
@@ -296,9 +296,9 @@ if len(image_files) == 0:
         "\nNo test images were found."
     )
 
-# LOAD TRAINED RGBRN MODEL
+# LOAD TRAINED RGBReN MODEL
 
-print("\nLoading trained RGBRN model:")
+print("\nLoading trained RGBReN model:")
 
 print(MODEL_PATH)
 
@@ -437,7 +437,7 @@ def load_rgb_visualization(
 ):
 
     """
-    Loads the 5-band RGBRN image and extracts
+    Loads the 5-band RGBReN image and extracts
     the first three channels for visualization.
 
     Assumed channel order:
@@ -602,7 +602,7 @@ def load_rgb_visualization(
 
 # PROCESS EACH TEST IMAGE
 
-print("\nRunning RGBRN test inference...\n")
+print("\nRunning RGBReN test inference...\n")
 
 
 for image_index, image_path in enumerate(
@@ -859,7 +859,7 @@ for image_index, image_path in enumerate(
             label_path
         )
 
-    # RGBRN MODEL INFERENCE
+    # RGBReN MODEL INFERENCE
     #
     # IMPORTANT:
     #
@@ -1248,7 +1248,7 @@ else:
 # STANDARD ULTRALYTICS TEST METRICS
 
 print(
-    "\nRunning Ultralytics RGBRN test-set evaluation..."
+    "\nRunning Ultralytics RGBReN test-set evaluation..."
 )
 
 
@@ -1381,7 +1381,7 @@ overall_results.to_csv(
 
 print("\n")
 print("=" * 75)
-print("FINAL RGBRN TEST RESULTS")
+print("FINAL RGBReN TEST RESULTS")
 print("=" * 75)
 
 
@@ -1510,5 +1510,5 @@ print(
 
 print("\n")
 print("=" * 75)
-print("RGBRN TEST EVALUATION COMPLETED")
+print("RGBReN TEST EVALUATION COMPLETED")
 print("=" * 75)
