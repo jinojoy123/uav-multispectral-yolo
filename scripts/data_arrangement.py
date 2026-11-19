@@ -1,4 +1,4 @@
-# Prepare RGBREN Dataset for YOLO Training
+# Prepare RGBReN Dataset for YOLO Training
 
 import os
 import cv2
@@ -140,7 +140,7 @@ def convert_uint16_to_uint8(img):
     else:
         raise ValueError(f"Unexpected image shape: {img.shape}")
 
-# SAVE RGBREN
+# SAVE RGBReN
 
 def process_and_save(prefix, split_name):
 
@@ -171,7 +171,7 @@ def process_and_save(prefix, split_name):
     print("REDEDGE:", rededge.shape)
     print("NIR:", nir.shape)
 
-    # RGBREN STACK
+    # RGBReN STACK
 
     rgbren = np.stack([
         red,
@@ -182,7 +182,7 @@ def process_and_save(prefix, split_name):
     ], axis=-1)
 
     rgbren = convert_uint16_to_uint8(rgbren)
-    print("RGBREN stacked shape:", rgbren.shape)
+    print("RGBReN stacked shape:", rgbren.shape)
 
     # resized_channels = []
 
