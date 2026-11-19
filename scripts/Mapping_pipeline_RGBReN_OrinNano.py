@@ -1,4 +1,4 @@
-# RGBRN (R,G,B,RedEdge,NIR) ORTHOMOSAIC -> WEED PRESCRIPTION MAP
+# RGBReN (R,G,B,RedEdge,NIR) ORTHOMOSAIC -> WEED PRESCRIPTION MAP
 # EDGE DEVICE DEPLOYMENT BENCHMARK
 #
 # Supported model configurations:
@@ -53,7 +53,7 @@
 #   - Warm-up excluded from all measurements
 #   - 3 complete benchmark runs
 #   - Batch size = 1
-#   - Same 5-band RGBRN orthomosaic for all models
+#   - Same 5-band  orthomosaic for all models
 #   - Same confidence threshold for all models
 #
 
@@ -124,15 +124,15 @@ MODEL_VERSION = "PyTorch_FP32"
 # MODEL_VERSION = "TensorRT_INT8"
 
 # Examples:
-# MODEL_PATH = "yolo11n_RGBRN_C1/RGBRN_PyTorch_FP32.pt"
-# MODEL_PATH = "yolo11n_RGBRN_C1/RGBRN_TensorRT_FP32.engine"
-# MODEL_PATH = "yolo11n_RGBRN_C1/RGBRN_TensorRT_FP16.engine"
+# MODEL_PATH = "yolo11n__C1/_PyTorch_FP32.pt"
+# MODEL_PATH = "yolo11n_RGBReN_C1/RGBReN_TensorRT_FP32.engine"
+# MODEL_PATH = "yolo11n_RGBReN_C1/RGBReN_TensorRT_FP16.engine"
 MODEL_PATH = (
-    "/RGBRN_PyTorch_FP32.pt"
+    "/RGBReN_PyTorch_FP32.pt"
 )
 
 
-# RGBRN INPUT SETTINGS
+# RGBReN INPUT SETTINGS
 
 # Input must be a co-registered five-band GeoTIFF in EXACT order:
 #   1 = Red
@@ -141,7 +141,7 @@ MODEL_PATH = (
 #   4 = RedEdge
 #   5 = NIR
 INPUT_TIF = (
-    "/Orthomosaic_RGBRN.tif"
+    "/Orthomosaic_RGBReN.tif"
 )
 
 NUMBER_OF_CHANNELS = 5
@@ -152,7 +152,7 @@ NUMBER_OF_CHANNELS = 5
 # "divide_256" -> uint16 to uint8 using /256 (training-compatible option)
 #
 # Do not use a different normalization during deployment than during training.
-RGBRN_SCALING_MODE = "divide_256"
+rgbren_SCALING_MODE = "divide_256"
 
 TILE_SIZE = 640
 CONF_THRESHOLD = 0.5
@@ -177,7 +177,7 @@ TEGRASTATS_INTERVAL_MS = 100
 # MAIN BENCHMARK OUTPUT DIRECTORY
 
 BENCHMARK_ROOT = os.path.join(
-    "benchmark_results_RGBRN_C1",
+    "benchmark_results_rgbren_C1",
     MODEL_VERSION
 )
 
@@ -590,9 +590,9 @@ def save_tile_performance_csv(
             )
 
 
-# RGBRN HELPERS
+# RGBReN HELPERS
 
-def prepare_rgbrn_tile(tile_chw):
+def prepare_rgbren_tile(tile_chw):
     """Prepare one five-band tile while preserving R,G,B,RedEdge,NIR order."""
 
     if tile_chw.ndim != 3:
@@ -608,15 +608,15 @@ def prepare_rgbrn_tile(tile_chw):
 
     tile_hwc = np.transpose(tile_chw, (1, 2, 0))
 
-    if RGBRN_SCALING_MODE == "none":
+    if rgbren_SCALING_MODE == "none":
         if tile_hwc.dtype != np.uint8:
             raise ValueError(
-                "RGBRN_SCALING_MODE='none' requires uint8 input. "
+                "rgbren_SCALING_MODE='none' requires uint8 input. "
                 f"Current dtype: {tile_hwc.dtype}"
             )
         out = tile_hwc
 
-    elif RGBRN_SCALING_MODE == "divide_256":
+    elif rgbren_SCALING_MODE == "divide_256":
         if tile_hwc.dtype == np.uint8:
             # Avoid dividing already processed uint8 imagery a second time.
             out = tile_hwc
@@ -629,12 +629,12 @@ def prepare_rgbrn_tile(tile_chw):
 
     else:
         raise ValueError(
-            "RGBRN_SCALING_MODE must be 'none' or 'divide_256'."
+            "rgbren_SCALING_MODE must be 'none' or 'divide_256'."
         )
 
     if out.shape[2] != 5:
         raise RuntimeError(
-            f"Prepared RGBRN tile has invalid shape {out.shape}."
+            f"Prepared rgbren tile has invalid shape {out.shape}."
         )
 
     return np.ascontiguousarray(out)
@@ -662,7 +662,7 @@ print(
 )
 
 print(
-    "RGBRN input:",
+    "rgbren input:",
     INPUT_TIF
 )
 
@@ -671,8 +671,8 @@ print(
 )
 
 print(
-    "RGBRN scaling mode:",
-    RGBRN_SCALING_MODE
+    "rgbren scaling mode:",
+    rgbren_SCALING_MODE
 )
 
 if not os.path.isdir(yolo_source_path):
@@ -683,7 +683,7 @@ if not os.path.isdir(yolo_source_path):
 
 if not os.path.isfile(INPUT_TIF):
     raise FileNotFoundError(
-        f"RGBRN orthomosaic not found: {INPUT_TIF}"
+        f"rgbren orthomosaic not found: {INPUT_TIF}"
     )
 
 if not os.path.isfile(MODEL_PATH):
@@ -898,7 +898,7 @@ for BENCHMARK_RUN in range(
 
     print("\n")
     print("-" * 80)
-    print("STEP 1: TILING 5-BAND RGBRN ORTHOMOSAIC")
+    print("STEP 1: TILING 5-BAND RGBReN ORTHOMOSAIC")
     print("-" * 80)
 
 
@@ -932,11 +932,11 @@ for BENCHMARK_RUN in range(
             )
 
         print(
-            f"RGBRN source bands: {src.count}"
+            f"rgbren source bands: {src.count}"
         )
 
         print(
-            f"RGBRN source dtypes: {src.dtypes}"
+            f"rgbren source dtypes: {src.dtypes}"
         )
 
 
@@ -1000,7 +1000,7 @@ for BENCHMARK_RUN in range(
                     window=window
                 )
 
-                tile = prepare_rgbrn_tile(
+                tile = prepare_rgbren_tile(
                     tile_chw
                 )
 
@@ -1347,7 +1347,7 @@ for BENCHMARK_RUN in range(
 
     print("\n")
     print("-" * 80)
-    print("STEP 2: 5-CHANNEL RGBRN YOLO INFERENCE")
+    print("STEP 2: 5-CHANNEL RGBReN YOLO INFERENCE")
     print("-" * 80)
 
 
@@ -1395,18 +1395,18 @@ for BENCHMARK_RUN in range(
 
         # Verify that the saved inference tile really contains all five
         # channels. This check is outside the timed model() call.
-        rgbrn_check = tifffile.imread(
+        rgbren_check = tifffile.imread(
             tile_path
         )
 
         if (
-            rgbrn_check.ndim != 3
+            rgbren_check.ndim != 3
             or
-            rgbrn_check.shape[2] != NUMBER_OF_CHANNELS
+            rgbren_check.shape[2] != NUMBER_OF_CHANNELS
         ):
             raise RuntimeError(
                 f"{tile_file} is not HxWx5. "
-                f"tifffile returned {rgbrn_check.shape}."
+                f"tifffile returned {rgbren_check.shape}."
             )
 
 
@@ -3149,8 +3149,8 @@ for BENCHMARK_RUN in range(
         "band_order":
             "R,G,B,RedEdge,NIR",
 
-        "rgbrn_scaling_mode":
-            RGBRN_SCALING_MODE,
+        "rgbren_scaling_mode":
+            rgbren_SCALING_MODE,
 
         "number_of_tiles":
             len(tile_files),
