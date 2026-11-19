@@ -42,20 +42,20 @@ pretrained_model = '/yolomodel.pt'
 
 # DATASET SETTINGS
 
-# RGBRN dataset path
-dataset_path = r"/processed_RGBRN"
+# RGBReN dataset path
+dataset_path = r"/processed_RGBReN"
 os.makedirs(dataset_path, exist_ok=True)
-images_train_path_RGBRN = os.path.join(
+images_train_path_RGBReN = os.path.join(
     dataset_path,
     "train"
 )
 
-images_val_path_RGBRN = os.path.join(
+images_val_path_RGBReN = os.path.join(
     dataset_path,
     "val"
 )
 
-images_test_path_RGBRN = os.path.join(
+images_test_path_RGBReN = os.path.join(
     dataset_path,
     "test"
 )
@@ -70,12 +70,12 @@ class_names = ['Crop', 'Weed']
 
 # CREATE DATA YAML
 
-output_yaml_RGBRN = os.path.join(
+output_yaml_RGBReN = os.path.join(
     dataset_path,
-    "data_RGBRN.yaml"
+    "data_RGBReN.yaml"
 )
 
-yaml_path = output_yaml_RGBRN
+yaml_path = output_yaml_RGBReN
 print(f"\nDataset YAML created:")
 
 # LOAD MODEL
@@ -105,7 +105,7 @@ results = model.train(
 
     # Output
     project=os.path.join(dataset_path, "runs"),
-    name="Crop_Weed_RGBRN",
+    name="Crop_Weed_RGBReN",
 
     # Segmentation
     task='segment',
