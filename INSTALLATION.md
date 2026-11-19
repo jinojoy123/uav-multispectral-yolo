@@ -137,7 +137,7 @@ model weights. Supply your own data and trained/pretrained models.
 Use the collected RGB images and the corresponding YOLO
 instance-segmentation annotations.
 
-### RGBRN input
+### RGBReN input
 
 Use **five registered bands in this exact order**:
 
@@ -188,14 +188,14 @@ configuring the scripts:
 
 ``` bash
 python scripts/train\_RGB.py
-python scripts/train\_RGBRN.py
+python scripts/train\_RGBReN.py
 ```
 
 For evaluation:
 
 ``` bash
 python scripts/test\_RGB.py
-python scripts/test\_RGBRN.py
+python scripts/test\_RGBReN.py
 ```
 
 These are **entry-point examples**, not guaranteed plug-and-play
@@ -210,7 +210,7 @@ architecture variants, weights, or datasets are selected automatically.
 
 ## 8\. NVIDIA Jetson deployment
 
-The repository includes separate RGB and RGBRN mapping scripts for
+The repository includes separate RGB and RGBReN mapping scripts for
 **Jetson Orin Nano** and **Jetson AGX Orin**. No separate Jetson
 requirements file is maintained at this stage.
 
@@ -245,9 +245,9 @@ Script                               Purpose
 \---
 
 `scripts/export\_tensorrt\_RGB.py`     Export RGB model
-`scripts/export\_tensorrt\_RGBRN.py`   Export RGBRN model
+`scripts/export\_tensorrt\_RGBReN.py`   Export RGBReN model
 `scripts/test\_RGB\_TensorRT.py`       Evaluate RGB TensorRT engine
-`scripts/test\_RGBRN\_TensorRT.py`     Evaluate RGBRN TensorRT engine
+`scripts/test\_RGBReN\_TensorRT.py`     Evaluate RGBReN TensorRT engine
 
 TensorRT FP32, FP16, and INT8 are research configurations, not a promise
 that every precision mode works on every hardware/software combination.
@@ -261,9 +261,9 @@ Device                  RGB                                          RGBRN
 
 \---
 
-Jetson Orin Nano        `scripts/Mapping\_pipeline\_RGB\_Orinnano.py`   `scripts/Mapping\_pipeline\_RGBRN\_OrinNano.py`
+Jetson Orin Nano        `scripts/Mapping\_pipeline\_RGB\_Orinnano.py`   `scripts/Mapping\_pipeline\_RGBReN\_OrinNano.py`
 
-## Jetson AGX Orin         `scripts/Mapping\_pipeline\_RGB\_AGXorin.py`    `scripts/Mapping\_pipeline\_RGBRN\_AGXorin.py`
+## Jetson AGX Orin         `scripts/Mapping\_pipeline\_RGB\_AGXorin.py`    `scripts/Mapping\_pipeline\_RGBReN\_AGXorin.py`
 
 Verify filenames against the current GitHub tree if they have been
 renamed. The mapping workflows depend on correctly georeferenced
