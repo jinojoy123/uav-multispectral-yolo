@@ -1,7 +1,7 @@
-# STACK FIVE ORTHOMOSAIC BANDS FOR RGBRN INFERENCE
+# STACK FIVE ORTHOMOSAIC BANDS FOR RGBReN INFERENCE
 #
 # Purpose:
-#   Create ONE georeferenced 5-band RGBRN orthomosaic for the prescription-map
+#   Create ONE georeferenced 5-band RGBReN orthomosaic for the prescription-map
 #   inference script.
 #
 # Band order:
@@ -18,10 +18,10 @@
 #   - No RGB-only dataset is created
 #   - Spatial dimensions/georeferencing are preserved
 #   - Each band is converted to uint8 using the SAME per-band min-max
-#     normalization principle used in RGBRN_data_arrangement.py
+#     normalization principle used in RGBReN_data_arrangement.py
 #
 # The output is a single 5-band GeoTIFF that can then be tiled internally by
-# prescription_map_RGBRN_edgedevices_corrected.py.
+# prescription_map_RGBReN_edgedevices_corrected.py.
 
 import os
 import numpy as np
@@ -43,10 +43,10 @@ NIR_PATH = r"/nir.tif"
 
 
 # Output stacked orthomosaic
-OUTPUT_RGBRN_TIF = r"/RGBRN.tif"
+OUTPUT_RGBReN_TIF = r"/RGBReN.tif"
 
 
-# Output datatype expected by the current RGBRN training pipeline
+# Output datatype expected by the current RGBReN training pipeline
 OUTPUT_DTYPE = np.uint8
 
 
@@ -360,7 +360,7 @@ def main():
     )
 
     print(
-        "RGBRN ORTHOMOSAIC STACKING FOR INFERENCE"
+        "RGBReN ORTHOMOSAIC STACKING FOR INFERENCE"
     )
 
     print(
@@ -423,7 +423,7 @@ def main():
     
     # Calculate global min/max separately for each band.
     #
-    # Your original RGBRN_data_arrangement.py normalizes each channel
+    # Your original RGBReN_data_arrangement.py normalizes each channel
     # independently to 0-255. We preserve that behavior here.
     
 
@@ -492,7 +492,7 @@ def main():
 
 
     output_parent = os.path.dirname(
-        OUTPUT_RGBRN_TIF
+        OUTPUT_RGBReN_TIF
     )
 
 
@@ -532,12 +532,12 @@ def main():
 
 
         print(
-            "\nWriting stacked RGBRN orthomosaic..."
+            "\nWriting stacked RGBReN orthomosaic..."
         )
 
 
         with rasterio.open(
-            OUTPUT_RGBRN_TIF,
+            OUTPUT_RGBReN_TIF,
             "w",
             **output_profile
         ) as dst:
@@ -709,11 +709,11 @@ def main():
 
 
     with rasterio.open(
-        OUTPUT_RGBRN_TIF
+        OUTPUT_RGBReN_TIF
     ) as stacked:
 
         print(
-            f"Output: {OUTPUT_RGBRN_TIF}"
+            f"Output: {OUTPUT_RGBReN_TIF}"
         )
 
         print(
@@ -772,7 +772,7 @@ def main():
     )
 
     print(
-        "RGBRN STACKING COMPLETED SUCCESSFULLY"
+        "RGBReN STACKING COMPLETED SUCCESSFULLY"
     )
 
     print(
@@ -781,11 +781,11 @@ def main():
 
     print(
         "\nUse this file as INPUT_TIF in "
-        "prescription_map_RGBRN_edgedevices_corrected.py:"
+        "prescription_map_RGBReN_edgedevices_corrected.py:"
     )
 
     print(
-        OUTPUT_RGBRN_TIF
+        OUTPUT_RGBReN_TIF
     )
 
     print(
@@ -793,7 +793,7 @@ def main():
     )
 
     print(
-        'RGBRN_SCALING_MODE = "none"'
+        'RGBReN_SCALING_MODE = "none"'
     )
 
 
