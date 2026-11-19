@@ -1,6 +1,6 @@
 # UAV Multispectral YOLO: Automated Agricultural Imagery Mapping on Edge Devices
 
-A research framework for **RGB and multispectral UAV image instance segmentation, automated geospatial mapping, and deployment on NVIDIA Jetson edge devices**. The framework adapts Ultralytics YOLO architectures for three-channel RGB and five-channel **RGBRN (Red, Green, Blue, Red Edge, Near-Infrared)** inputs, with **sugarbeet crop and weed mapping** as the case-study application.
+A research framework for **RGB and multispectral UAV image instance segmentation, automated geospatial mapping, and deployment on NVIDIA Jetson edge devices**. The framework adapts Ultralytics YOLO architectures for three-channel RGB and five-channel **RGBReN (Red, Green, Blue, Red Edge, Near-Infrared)** inputs, with **sugarbeet crop and weed mapping** as the case-study application.
 
 This repository brings together dataset preparation, model training and evaluation, TensorRT export and benchmarking, and orthomosaic-to-prescription-map processing. The included mapping implementations are tailored to the sugarbeet application; adapting them to other crops or agricultural targets requires appropriate datasets, classes, and mapping rules.
 
@@ -19,7 +19,7 @@ This repository brings together dataset preparation, model training and evaluati
 UAV imagery / georeferenced orthomosaics
                   |
                   v
-        RGB or RGBRN preparation
+        RGB or RGBReN preparation
                   |
                   v
     Multispectral YOLO instance segmentation
@@ -63,17 +63,17 @@ All research scripts are maintained together in the **`scripts/`** folder; they 
 |---|---|
 | `data_arrangement.py` | Arrange and preprocess research imagery and labels |
 | `train_RGB.py` | RGB model training |
-| `train_RGBRN.py` | Five-channel RGBRN model training |
+| `train_RGBReN.py` | Five-channel RGBReN model training |
 | `test_RGB.py` | RGB model evaluation |
-| `test_RGBRN.py` | RGBRN model evaluation |
+| `test_RGBReN.py` | RGBReN model evaluation |
 | `export_tensorrt_RGB.py` | RGB TensorRT export |
-| `export_tensorrt_RGBRN.py` | RGBRN TensorRT export |
+| `export_tensorrt_RGBReN.py` | RGBReN TensorRT export |
 | `test_RGB_TensorRT.py` | RGB TensorRT evaluation |
-| `test_RGBRN_TensorRT.py` | RGBRN TensorRT evaluation |
+| `test_RGBReN_TensorRT.py` | RGBReN TensorRT evaluation |
 | `Mapping_pipeline_RGB_Orinnano.py` | RGB orthomosaic mapping on Orin Nano |
-| `Mapping_pipeline_RGBRN_OrinNano.py` | RGBRN orthomosaic mapping on Orin Nano |
+| `Mapping_pipeline_RGBReN_OrinNano.py` | RGBReN orthomosaic mapping on Orin Nano |
 | `Mapping_pipeline_RGB_AGXorin.py` | RGB orthomosaic mapping on AGX Orin |
-| `Mapping_pipeline_RGBRN_AGXorin.py` | RGBRN orthomosaic mapping on AGX Orin |
+| `Mapping_pipeline_RGBReN_AGXorin.py` | RGBReN orthomosaic mapping on AGX Orin |
 | `RGBRN_orthomosaic_for_inference.py` | Prepare a five-band orthomosaic for inference |
 
 The script names are listed as included in the prepared research package; confirm exact capitalization against the GitHub tree if you have subsequently renamed files.
@@ -101,7 +101,7 @@ Inspect the selected script for the exact output filenames, grid size, threshold
 
 RGB models use images directly obtained from the sensor. No preprocessing steps like RGBRN. The relevant training, evaluation, and mapping scripts should be configured to use the corresponding RGB imagery and trained weights.
 
-### RGBRN
+### RGBReN
 
 The intended multispectral channel order is:
 
@@ -146,11 +146,11 @@ For environment setup, dependencies, training, and NVIDIA Jetson deployment inst
 5. Configure the matching orthomosaic mapping script for the input imagery, model, grid settings, and output directory.
 6. Review segmentation, geospatial alignment, weed-density, and prescription outputs.
 
-**Execution note:** The current scripts contain machine-specific or placeholder paths (for example, `/processed_RGBRN`, `/Orthomosaic_RGB.tif`, and `/Orthomosaic_RGBRN.tif`). Set these to your actual data and model locations before running. Script-specific dependencies and configuration parameters are not yet consolidated into a unified command-line interface.
+**Execution note:** The current scripts contain machine-specific or placeholder paths (for example, `/processed_RGBReN`, `/Orthomosaic_RGB.tif`, and `/Orthomosaic_RGBReN.tif`). Set these to your actual data and model locations before running. Script-specific dependencies and configuration parameters are not yet consolidated into a unified command-line interface.
 
 ## Edge deployment
 
-The repository includes research implementations for **NVIDIA Jetson Orin Nano** and **Jetson AGX Orin**. RGB and RGBRN models can be evaluated in PyTorch and TensorRT configurations, including FP32, FP16, and INT8 where supported by the model and device environment.
+The repository includes research implementations for **NVIDIA Jetson Orin Nano** and **Jetson AGX Orin**. RGB and RGBReN models can be evaluated in PyTorch and TensorRT configurations, including FP32, FP16, and INT8 where supported by the model and device environment.
 
 TensorRT engine files are generally specific to the build environment and hardware/software configuration. Export or rebuild engines on the intended deployment platform, and document the relevant JetPack, CUDA, TensorRT, and PyTorch versions when reporting benchmarks.
 
