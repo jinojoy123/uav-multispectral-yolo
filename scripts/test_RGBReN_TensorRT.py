@@ -1,6 +1,6 @@
-# uav_MS_yolo RGBRN - MULTI-FORMAT INDEPENDENT TEST EVALUATION 
+# uav_MS_yolo RGBReN - MULTI-FORMAT INDEPENDENT TEST EVALUATION 
 # The 
-# Supports 5-channel RGBRN models:
+# Supports 5-channel RGBReN models:
 #   - PyTorch (.pt)
 #   - TensorRT (.engine), including FP32 / FP16 / INT8 engines
 #
@@ -61,13 +61,13 @@ import numpy as np
 import pandas as pd
 import tifffile
 
-# RGBRN DATASET SETTINGS
+# RGBReN DATASET SETTINGS
 
-dataset_path = r"/processed_RGBRN"
+dataset_path = r"/processed_RGBReN"
 
-images_train_path_RGBRN = os.path.join(dataset_path, "train")
-images_val_path_RGBRN = os.path.join(dataset_path, "val")
-images_test_path_RGBRN = os.path.join(dataset_path, "test")
+images_train_path_RGBReN = os.path.join(dataset_path, "train")
+images_val_path_RGBReN = os.path.join(dataset_path, "val")
+images_test_path_RGBReN = os.path.join(dataset_path, "test")
 
 number_of_channels = 5
 number_of_classes = 2
@@ -77,69 +77,69 @@ class_names = [
     "Weed"
 ]
 
-# Create/refresh the same RGBRN YAML used by the custom multispectral pipeline.
-output_yaml_RGBRN = os.path.join(
+# Create/refresh the same RGBReN YAML used by the custom multispectral pipeline.
+output_yaml_RGBReN = os.path.join(
     dataset_path,
-    "data_RGBRN.yaml"
+    "data_RGBReN.yaml"
 )
 
-DATA_YAML = output_yaml_RGBRN
+DATA_YAML = output_yaml_RGBReN
 
-print("\nRGBRN dataset YAML:")
+print("\nRGBReN dataset YAML:")
 print(DATA_YAML)
 
 # MODELS TO TEST
 #
 # IMPORTANT:
-# Every model listed here must be a 5-channel RGBRN segmentation model.
+# Every model listed here must be a 5-channel RGBReN segmentation model.
 #
 # Add/remove models as required. TensorRT engines must have been exported
-# from the corresponding 5-channel RGBRN model.
+# from the corresponding 5-channel RGBReN model.
 #
 # For fixed-shape TensorRT engines, IMG_SIZE must match the export size.
 
 MODELS = [
     # {
-    #     "name": "RGBRN_TensorRT_FP16",
+    #     "name": "RGBReN_TensorRT_FP16",
     #     "path": os.path.join(
     #         dataset_path,
     #         "runs",
     #         "yolo",
     #         "weights",
-    #         "RGBRN_TensorRT_FP16.engine"
+    #         "RGBReN_TensorRT_FP16.engine"
     #     )
     # },
 
-    # Uncomment and update these paths after creating the RGBRN engines.
+    # Uncomment and update these paths after creating the RGBReN engines.
     #
     # {
-    #     "name": "RGBRN_TensorRT_FP32",
+    #     "name": "RGBReN_TensorRT_FP32",
     #     "path": os.path.join(
     #         dataset_path,
     #         "runs",
-    #         "Crop_Weed_RGBRN",
+    #         "Crop_Weed_RGBReN",
     #         "weights",
     #         "best_fp32.engine"
     #     )
     # },
     #
     # {
-    #     "name": "RGBRN_TensorRT_FP16",
+    #     "name": "RGBReN_TensorRT_FP16",
     #     "path": os.path.join(
     #         dataset_path,
     #         "runs",
-    #         "Crop_Weed_RGBRN",
+    #         "Crop_Weed_RGBReN",
     #         "weights",
     #         "best_fp16.engine"
     #     )
     # },
     #
     # {
-    #     "name": "RGBRN_TensorRT_INT8",
+    #     "name": "RGBReN_TensorRT_INT8",
     #     "path": os.path.join(
     #         dataset_path,
     #         "runs",
-    #         "Crop_Weed_RGBRN",
+    #         "Crop_Weed_RGBReN",
     #         "weights",
     #         "best_int8.engine"
     #     )
@@ -150,12 +150,12 @@ MODELS = [
 
 OUTPUT_DIR = os.path.join(
     dataset_path,
-    "test_evaluation_RGBRN_multi_format"
+    "test_evaluation_RGBReN_multi_format"
 )
 
 IMG_SIZE = 640
 
-# Keep these identical across RGB and RGBRN comparisons.
+# Keep these identical across RGB and RGBReN comparisons.
 CONF_THRESHOLD = 0.50
 IOU_NMS_THRESHOLD = 0.70
 
@@ -284,20 +284,20 @@ def overlay_mask(
     return image
 
 
-# DEFINE RGBRN TEST IMAGE AND LABEL DIRECTORIES
+# DEFINE RGBReN TEST IMAGE AND LABEL DIRECTORIES
 
-# Expected RGBRN structure:
-# processed_RGBRN/
+# Expected RGBReN structure:
+# processed_RGBReN/
 # └── test/
 #     ├── images/
 #     └── labels/
 
 test_image_dir = Path(
-    images_test_path_RGBRN
+    images_test_path_RGBReN
 ) / "images"
 
 test_label_dir = Path(
-    images_test_path_RGBRN
+    images_test_path_RGBReN
 ) / "labels"
 
 print("\nTest image directory:")
@@ -559,12 +559,12 @@ for model_number, model_info in enumerate(
 
     print("\nRunning test inference...\n")
     # FUNCTION:
-    # LOAD RGB VISUALIZATION FROM 5-CHANNEL RGBRN IMAGE
+    # LOAD RGB VISUALIZATION FROM 5-CHANNEL RGBReN IMAGE
 
     def load_rgb_visualization(image_path):
 
         """
-        Load the 5-channel RGBRN TIFF and use only
+        Load the 5-channel RGBReN TIFF and use only
         R, G, B for visualization.
 
         Expected channel order:
@@ -621,7 +621,7 @@ for model_number, model_info in enumerate(
             else:
 
                 raise ValueError(
-                    f"Unexpected RGBRN image shape "
+                    f"Unexpected RGBReN image shape "
                     f"for {image_path.name}: "
                     f"{image_ms.shape}"
                 )
@@ -1747,5 +1747,5 @@ else:
 
 print("\n")
 print("=" * 80)
-print("RGBRN MULTI-FORMAT TEST EVALUATION COMPLETED")
+print("RGBReN MULTI-FORMAT TEST EVALUATION COMPLETED")
 print("=" * 80)
