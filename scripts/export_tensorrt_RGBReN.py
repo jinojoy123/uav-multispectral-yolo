@@ -1,6 +1,6 @@
-# RGBRN YOLO SEGMENTATION MODEL
+# RGBReN YOLO SEGMENTATION MODEL
 # TENSORRT EXPORT FOR EDGE DEPLOYMENT
-# RGBRN input:
+# RGBReN input:
 #   R
 #   G
 #   B
@@ -14,7 +14,7 @@
 #   3. TensorRT FP16      -> .engine
 #   4. TensorRT INT8 PTQ  -> .engine
 # INT8 uses STATIC POST-TRAINING QUANTIZATION.
-# Calibration uses representative 5-channel RGBRN validation imagery.
+# Calibration uses representative 5-channel RGBReN validation imagery.
 # Independent TEST data are NOT used for calibration.
 
 import os
@@ -83,7 +83,7 @@ from ultralytics import YOLO
 
 # DATASET SETTINGS
 
-dataset_path = r"/processed_RGBRN"
+dataset_path = r"/processed_RGBReN"
 
 os.makedirs(
     dataset_path,
@@ -91,7 +91,7 @@ os.makedirs(
 )
 
 
-images_train_path_RGBRN = os.path.join(
+images_train_path_RGBReN = os.path.join(
 
     dataset_path,
     "train"
@@ -99,7 +99,7 @@ images_train_path_RGBRN = os.path.join(
 )
 
 
-images_val_path_RGBRN = os.path.join(
+images_val_path_RGBReN = os.path.join(
 
     dataset_path,
     "val"
@@ -107,7 +107,7 @@ images_val_path_RGBRN = os.path.join(
 )
 
 
-images_test_path_RGBRN = os.path.join(
+images_test_path_RGBReN = os.path.join(
 
     dataset_path,
     "test"
@@ -127,16 +127,16 @@ class_names = [
 
 # CREATE DATA YAML
 
-output_yaml_RGBRN = os.path.join(
+output_yaml_RGBReN = os.path.join(
 
     dataset_path,
 
-    "data_RGBRN.yaml"
+    "data_RGBReN.yaml"
 
 )
 
 
-yaml_path = output_yaml_RGBRN
+yaml_path = output_yaml_RGBReN
 
 
 print(
@@ -151,7 +151,7 @@ print(
 # USER SETTINGS
 # IMPORTANT:
 #
-# Change this to the RGBRN best.pt checkpoint that you want to export.
+# Change this to the RGBReN best.pt checkpoint that you want to export.
 
 MODEL_PATH = os.path.join(
 
@@ -178,7 +178,7 @@ OUTPUT_DIR = Path(
 
         dataset_path,
 
-        "deployment_RGBRN"
+        "deployment_RGBReN"
 
     )
 
@@ -268,7 +268,7 @@ if not os.path.isfile(
 
     raise FileNotFoundError(
 
-        f"\nRGBRN model not found:\n"
+        f"\nRGBReN model not found:\n"
 
         f"{MODEL_PATH}"
 
@@ -281,7 +281,7 @@ if not os.path.isfile(
 
     raise FileNotFoundError(
 
-        f"\nRGBRN dataset YAML not found:\n"
+        f"\nRGBReN dataset YAML not found:\n"
 
         f"{yaml_path}"
 
@@ -296,7 +296,7 @@ print("=" * 80)
 
 
 print(
-    "\nOriginal RGBRN PyTorch checkpoint:"
+    "\nOriginal RGBReN PyTorch checkpoint:"
 )
 
 
@@ -315,7 +315,7 @@ pytorch_output = (
 
     OUTPUT_DIR /
 
-    "RGBRN_PyTorch_FP32.pt"
+    "RGBReN_PyTorch_FP32.pt"
 
 )
 
@@ -396,7 +396,7 @@ def save_engine(
 
 print("\n")
 print("=" * 80)
-print("LOADING RGBRN MODEL")
+print("LOADING RGBReN MODEL")
 print("=" * 80)
 
 
@@ -408,7 +408,7 @@ model = YOLO(
 
 
 print(
-    "\nRGBRN model loaded successfully."
+    "\nRGBReN model loaded successfully."
 )
 
 # ATTEMPT TO VERIFY FIRST CONVOLUTION INPUT CHANNELS
@@ -445,7 +445,7 @@ if first_conv_channels != 5:
         f"The loaded model reports "
         f"{first_conv_channels} input channels.\n"
 
-        "Expected 5 channels for RGBRN.\n\n"
+        "Expected 5 channels for RGBReN.\n\n"
 
         "Do not continue TensorRT export until the "
         "5-channel model is loaded correctly."
@@ -454,14 +454,14 @@ if first_conv_channels != 5:
 
 
 print(
-    "\n5-channel RGBRN model verified."
+    "\n5-channel RGBReN model verified."
 )
 
 # TENSORRT FP32
 
 print("\n")
 print("=" * 80)
-print("EXPORTING RGBRN TENSORRT FP32")
+print("EXPORTING RGBReN TENSORRT FP32")
 print("=" * 80)
 
 
@@ -495,7 +495,7 @@ fp32_engine = (
 
     OUTPUT_DIR /
 
-    "RGBRN_TensorRT_FP32.engine"
+    "RGBReN_TensorRT_FP32.engine"
 
 )
 
@@ -510,7 +510,7 @@ fp32_engine = save_engine(
 
 
 print(
-    "\nRGBRN TensorRT FP32 engine saved:"
+    "\nRGBReN TensorRT FP32 engine saved:"
 )
 
 
@@ -523,7 +523,7 @@ print(
 
 print("\n")
 print("=" * 80)
-print("EXPORTING RGBRN TENSORRT FP16")
+print("EXPORTING RGBReN TENSORRT FP16")
 print("=" * 80)
 
 
@@ -559,7 +559,7 @@ fp16_engine = (
 
     OUTPUT_DIR /
 
-    "RGBRN_TensorRT_FP16.engine"
+    "RGBReN_TensorRT_FP16.engine"
 
 )
 
@@ -574,7 +574,7 @@ fp16_engine = save_engine(
 
 
 print(
-    "\nRGBRN TensorRT FP16 engine saved:"
+    "\nRGBReN TensorRT FP16 engine saved:"
 )
 
 
@@ -584,7 +584,7 @@ print(
 
 # TENSORRT INT8
 # STATIC POST-TRAINING QUANTIZATION
-# The custom RGBRN data loader must provide:
+# The custom RGBReN data loader must provide:
 #       B x 5 x 640 x 640
 # tensors during calibration.
 # The validation split is used as representative calibration data.
@@ -592,7 +592,7 @@ print(
 
 print("\n")
 print("=" * 80)
-print("EXPORTING RGBRN TENSORRT INT8")
+print("EXPORTING RGBReN TENSORRT INT8")
 print("STATIC POST-TRAINING QUANTIZATION")
 print("=" * 80)
 
@@ -661,7 +661,7 @@ int8_engine = (
 
     OUTPUT_DIR /
 
-    "RGBRN_TensorRT_INT8.engine"
+    "RGBReN_TensorRT_INT8.engine"
 
 )
 
@@ -676,7 +676,7 @@ int8_engine = save_engine(
 
 
 print(
-    "\nRGBRN TensorRT INT8 engine saved:"
+    "\nRGBReN TensorRT INT8 engine saved:"
 )
 
 
@@ -709,7 +709,7 @@ def get_file_size_mb(
 
 print("\n")
 print("=" * 80)
-print("RGBRN DEPLOYMENT MODEL EXPORT COMPLETED")
+print("RGBReN DEPLOYMENT MODEL EXPORT COMPLETED")
 print("=" * 80)
 
 
@@ -804,7 +804,7 @@ print(
 
 
 print(
-    "RGBRN validation dataset"
+    "RGBReN validation dataset"
 )
 
 
